@@ -18,7 +18,7 @@ ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags="env=dev"
 ENV ENV.PROPERTY.gateway.otk.port="8443"
 ENV ENV.PROPERTY.gateway.otk.port.health=""
 ENV ENV.PROPERTY.gateway.otk.health.apikey=""
-ENV ENV.CONTEXT_VARIABLE_PROPERTY.\#OTK Storage Configuration.dbsystem="cassandra"
+ENV ENV.CONTEXT_VARIABLE_PROPERTY.`#OTK Storage Configuration.dbsystem`="cassandra"
 #permission change
 #COPY "misc_files" "/opt/docker/rc.d/folders/"
 #RUN chmod -R 750 '/opt/docker/rc.d/folders/'
