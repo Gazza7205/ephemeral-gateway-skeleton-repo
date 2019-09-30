@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NEW_IMAGE_NAME = 'gateway'
-        NEW_IMAGE_TAG = "${BUILD_NUMBER}"
+        NEW_IMAGE_TAG = "latest"
         NEW_IMAGE_REGISTRY_REPOSITORY    = 'docker-hosted'
     }
 
