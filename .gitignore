@@ -12,5 +12,5 @@ build/
 .java-version
 
 # Ignore the license out so that it is not accidentally committed.
-/license.xml
-/docker/license.xml
+#/license.xml
+#/docker/license.xml

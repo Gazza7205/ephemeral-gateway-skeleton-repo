@@ -1,0 +1,75 @@
+# Copyright (c) 2018 CA. All rights reserved.
+# This software may be modified and distributed under the terms
+# of the MIT license.  See the LICENSE file for details.
+
+version: '3.4'
+services:
+  gateway-dev:
+    hostname: localhost
+    image: caapim/gateway:latest
+    ports:
+    - "8080:8080"
+    - "8443:8443"
+    - "8000:8000"
+    volumes:
+    - /opt/SecureSpan/Gateway/node/default/etc/bootstrap/services/restman
+    - ./build/gateway/cicd-gateway-1.0.0.gw7:/opt/docker/rc.d/otk5.gw7
+    secrets:
+    - source: license
+      target: /opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/license.xml
+    environment:
+      ACCEPT_LICENSE: "true"
+      SSG_ADMIN_USERNAME: "admin"
+      SSG_ADMIN_PASSWORD: "password"
+      # OTK Environment required
+      ENV.CASSANDRA_CONNECTION.OAuth_Cassandra: '{
+                                                     "keyspace": "otk",
+                                                     "contactPoint": "cassandra",
+                                                     "port": 9042,
+                                                     "username": "root",
+                                                     "compression": "NONE",
+                                                     "ssl": false
+                                                   }'
+      ENV.PROPERTY.gateway.otk.port: "8443"
+      ENV.PROPERTY.gateway.otk.port.health: ""
+      ENV.PROPERTY.gateway.otk.health.apikey: ""
+      ENV.CONTEXT_VARIABLE_PROPERTY.#OTK Storage Configuration.dbsystem: "cassandra"
+      ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.influxdb: "influxdb.url"
+      ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags: "env=dev"
+    depends_on:
+      - cassandra
+
+  cassandra:
+    container_name: cassandra
+    hostname: cassandra
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    environment:
+      CASSANDRA_START_RPC: "true"
+      CASSANDRA_SEEDS: "cassandra"
+      CASSANDRA_CLUSTER_NAME: "my_cluster"
+    ulimits:
+      memlock: -1
+      nproc: 32768
+      nofile: 100000
+    healthcheck:
+      test: ["CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-e describe keyspaces"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  cassandra-load-keyspace:
+    container_name: cassandra-load-keyspace
+    hostname: cassandra-load-keyspace
+    image: cassandra:latest
+    depends_on:
+      - cassandra
+    volumes:
+      - ./db_scripts/cassandra/otk_db_schema_cassandra.cql:/schema.cql
+      - ./db_scripts/cassandra/otk_db_keyspace.cql:/keyspace.cql
+    command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace/schema && cqlsh cassandra -f /keyspace.cql && cqlsh cassandra -k otk -f /schema.cql"
+
+secrets:
+  license:
+    file: ./docker/license.xml

@@ -20,16 +20,16 @@ buildscript {
 apply plugin: 'com.ca.apim.gateway.gateway-export-plugin'
 apply plugin: 'com.ca.apim.gateway.gateway-developer-plugin'
 
-group '<my.group.id>'
+group 'presales'
 version = '1.0.0'
 
 GatewayConnection {
     url = 'https://localhost:8443/restman'
 }
 
-GatewayExportConfig {
-    folderPath = '/<project-folder>'
-}
+// GatewayExportConfig {
+//     folderPath = '/services'
+// }
 
 repositories {
     flatDir {
@@ -58,3 +58,16 @@ task buildDockerImage(type: DockerBuildImage) {
     labels = ['org.opencontainers.image.created': new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))]
     pull.set(true)
 }
+
+repositories {
+    flatDir {
+        dirs "lib"
+    }
+}
+dependencies {
+    bundle group: 'otk-single-cassandra', name: 'otk-single-cassandra', version: '5.0.0-SNAPSHOT', ext: 'bundle', classifier: 'full'
+    customassertion group: 'otk-ResponseTypeSupportedCheckAssertion', name: 'otk-ResponseTypeSupportedCheckAssertion', ext: 'jar', version: '5.0.0-SNAPSHOT'
+    customassertion group: 'otk-DateFormatStringAssertion', name: 'otk-DateFormatStringAssertion', ext: 'jar', version: '5.0.0-SNAPSHOT'
+    customassertion group: 'otk-ScopeIssuingAndVerificationAssertions', name: 'otk-ScopeIssuingAndVerificationAssertions', ext: 'jar', version: '5.0.0-SNAPSHOT'
+}
+
