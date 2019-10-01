@@ -2,7 +2,7 @@ FROM caapim/gateway:latest
 
 ##
 USER root
-
+#OTK=ENV.CONTEXT_VARIABLE_PROPERTY.#OTK \Storage Configuration.dbsystem
 # Copy license files
 COPY "docker" "/opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/"
 # Or COPY the whole folder containing license(s)
@@ -16,9 +16,10 @@ ENV LANGUAGE="en_US:en"
 ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.influxdb="apim-service-metrics-runtime-influxdb.cicd.svc.cluster.local"
 ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags="env=dev"
 ENV ENV.PROPERTY.gateway.otk.port="8443"
-ENV ENV.PROPERTY.gateway.otk.port.health=""
-ENV ENV.PROPERTY.gateway.otk.health.apikey=""
-ENV ENV.CONTEXT_VARIABLE_PROPERTY.`#OTK Storage Configuration.dbsystem`="cassandra"
+#ENV ENV.PROPERTY.gateway.otk.port.health=""
+#ENV ENV.PROPERTY.gateway.otk.health.apikey=""
+ENV ENV.CONTEXT_VARIABLE_PROPERTY.\#OTK\ Storage\ Configuration.dbsystem="cassandra"
+ENV ENV.CASSANDRA_CONNECTION.OAuth_Cassandra='{ "keyspace": "otk","contactPoint": "cassandra-otk","port": 9042,"username": "root","compression": "NONE","ssl": false}'
 #permission change
 #COPY "misc_files" "/opt/docker/rc.d/folders/"
 #RUN chmod -R 750 '/opt/docker/rc.d/folders/'
@@ -28,6 +29,4 @@ COPY /build/gateway/cicd-gateway-1.0.0.gw7 /opt/docker/rc.d/deployment.gw7
 RUN touch /opt/SecureSpan/Gateway/node/default/etc/bootstrap/services/restman
 ##
 #COPY "lib" /opt/SecureSpan/Gateway/runtime/lib/ext/
-
-
 USER ${ENTRYPOINT_UID}

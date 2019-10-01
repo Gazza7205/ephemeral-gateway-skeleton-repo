@@ -4,7 +4,7 @@ pipeline {
     environment {
         NEW_IMAGE_NAME = 'gateway'
         NEW_IMAGE_TAG = "latest"
-        NEW_IMAGE_REGISTRY_REPOSITORY    = 'docker-hosted'
+        NEW_IMAGE_REGISTRY_REPOSITORY = 'docker-hosted'
     }
 
     stages {
