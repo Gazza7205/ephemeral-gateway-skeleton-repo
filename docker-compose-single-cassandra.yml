@@ -6,14 +6,14 @@ version: '3.4'
 services:
   gateway-dev:
     hostname: localhost
-    image: test/test:latest
+    image: caapim/gateway:latest
     ports:
     - "8080:8080"
     - "8443:8443"
     - "8000:8000"
-    #volumes:
-    # - /opt/SecureSpan/Gateway/node/default/etc/bootstrap/services/restman
-    #- ./build/gateway/cicd-gateway-1.0.0.gw7:/opt/docker/rc.d/otk5.gw7
+    volumes:
+    - /opt/SecureSpan/Gateway/node/default/etc/bootstrap/services/restman
+    - ./build/gateway/cicd-gateway-1.0.0.gw7:/opt/docker/rc.d/otk5.gw7
     secrets:
     - source: license
       target: /opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/license.xml
@@ -30,10 +30,10 @@ services:
                                                      "compression": "NONE",
                                                      "ssl": false
                                                    }'
-      ENV.PROPERTY.gateway.otk.port: "8443"
+      ENV.PROPERTY.gateway.otk.port: "443"
       ENV.PROPERTY.gateway.otk.port.health: ""
       ENV.PROPERTY.gateway.otk.health.apikey: ""
-      #ENV.CONTEXT_VARIABLE_PROPERTY.#OTK Storage Configuration.dbsystem: "cassandra"
+      ENV.CONTEXT_VARIABLE_PROPERTY.#OTK Storage Configuration.dbsystem: "cassandra"
       ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.influxdb: "influxdb.url"
       ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags: "env=dev"
     depends_on:
