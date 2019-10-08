@@ -68,7 +68,10 @@ services:
     volumes:
       - ./db_scripts/cassandra/otk_db_schema_cassandra.cql:/schema.cql
       - ./db_scripts/cassandra/otk_db_keyspace.cql:/keyspace.cql
-    command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace/schema && cqlsh cassandra -f /keyspace.cql && cqlsh cassandra -k otk -f /schema.cql"
+      - ./db_scripts/cassandra/mag_db_schema_cassandra.cql:/mag_schema.cql
+      - ./db_scripts/cassandra/mag_otk_db_data_cassandra.cql:/mag_otk.cql
+      
+    command: /bin/bash -c "sleep 60 && echo loading cassandra keyspace/schema && cqlsh cassandra -f /keyspace.cql && cqlsh cassandra -k otk -f /schema.cql && cqlsh cassandra -k otk -f /mag_schema.cql && cqlsh cassandra -k otk -f /mag_otk.cql"
 
 secrets:
   license:

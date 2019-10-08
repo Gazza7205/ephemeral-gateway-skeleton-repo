@@ -5,3 +5,5 @@
  */
 
 rootProject.name = 'cicd-gateway'
+
+include 'services'
