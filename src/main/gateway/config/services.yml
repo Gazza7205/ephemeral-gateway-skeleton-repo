@@ -1,0 +1,10 @@
+global/sharedcountertest:
+  url: "/api/v1/counter"
+  policy: "global/sharedcountertest"
+  httpMethods:
+  - "DELETE"
+  - "POST"
+  - "GET"
+  - "PUT"
+  properties: {}
+  wssProcessingEnabled: false
