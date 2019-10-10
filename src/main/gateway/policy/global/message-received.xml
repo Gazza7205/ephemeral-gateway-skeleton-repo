@@ -1,0 +1,27 @@
+<wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy" xmlns:L7p="http://www.layer7tech.com/ws/policy">
+    <wsp:All wsp:Usage="Required">
+        <L7p:CommentAssertion>
+            <L7p:Comment stringValue="Policy Fragment: message-received"/>
+        </L7p:CommentAssertion>
+        <wsp:OneOrMore wsp:Usage="Required">
+            <wsp:All wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.http.uri}"/>
+                    <L7p:Expression2 stringValue="/"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item binary="included">
+                            <L7p:CaseSensitive booleanValue="false"/>
+                            <L7p:RightValue stringValue="/"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <L7p:HardcodedResponse>
+                    <L7p:EarlyResponse booleanValue="true"/>
+                    <L7p:ResponseContentType stringValue="text/plain; charset=UTF-8"/>
+                </L7p:HardcodedResponse>
+            </wsp:All>
+            <L7p:TrueAssertion/>
+        </wsp:OneOrMore>
+    </wsp:All>
+</wsp:Policy>
