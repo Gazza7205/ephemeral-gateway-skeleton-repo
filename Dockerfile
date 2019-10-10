@@ -4,7 +4,7 @@ FROM caapim/gateway:latest
 USER root
 #OTK=ENV.CONTEXT_VARIABLE_PROPERTY.#OTK \Storage Configuration.dbsystem
 # Copy license files
-COPY "docker" "/opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/"
+#COPY "docker" "/opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/"
 # Or COPY the whole folder containing license(s)
 # COPY "licenses_folder" "/opt/SecureSpan/Gateway/node/default/etc/bootstrap/license/"
 #set the time zone to America/Vancouver
@@ -13,8 +13,8 @@ RUN ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8 --quiet
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
-ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.influxdb="apim-service-metrics-runtime-influxdb.cicd.svc.cluster.local"
-ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags="env=dev"
+#ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.influxdb="apim-service-metrics-runtime-influxdb.cicd.svc.cluster.local"
+#ENV ENV.CONTEXT_VARIABLE_PROPERTY.influxdb.tags="env=dev"
 ENV ENV.PROPERTY.gateway.otk.port="443"
 #ENV ENV.PROPERTY.gateway.otk.port.health=""
 #ENV ENV.PROPERTY.gateway.otk.health.apikey=""
