@@ -18,3 +18,13 @@ global/OAuthTest:
   - "PUT"
   properties: {}
   wssProcessingEnabled: false
+global/Test:
+  url: "/api/v1/test"
+  policy: "global/Test"
+  httpMethods:
+  - "DELETE"
+  - "POST"
+  - "GET"
+  - "PUT"
+  properties: {}
+  wssProcessingEnabled: false
