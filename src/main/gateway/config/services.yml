@@ -8,3 +8,13 @@ global/sharedcountertest:
   - "PUT"
   properties: {}
   wssProcessingEnabled: false
+global/OAuthTest:
+  url: "/oauth/example"
+  policy: "global/OAuthTest"
+  httpMethods:
+  - "DELETE"
+  - "POST"
+  - "GET"
+  - "PUT"
+  properties: {}
+  wssProcessingEnabled: false

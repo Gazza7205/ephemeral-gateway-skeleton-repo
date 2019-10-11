@@ -8,7 +8,7 @@
             <L7p:RateLimit>
                 <L7p:CounterName stringValue="PRESET(8dcd05725f9c99d7)${request.clientid}"/>
                 <L7p:MaxRequestsPerSecond stringValue="1"/>
-                <L7p:WindowSizeInSeconds stringValue="5"/>
+                <L7p:WindowSizeInSeconds stringValue="10"/>
             </L7p:RateLimit>
             <wsp:All wsp:Usage="Required">
                 <L7p:CustomizeErrorResponse>
